@@ -1,0 +1,16 @@
+services:
+  backend:
+    build: ./backend
+    ports: ["8000:8000"]
+    environment:
+      MINEMIND_CORS_ORIGINS: http://localhost:8080
+    volumes: ["minemind_data:/data"]
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        VITE_API_URL: http://localhost:8000
+    ports: ["8080:80"]
+    depends_on: [backend]
+volumes:
+  minemind_data:
